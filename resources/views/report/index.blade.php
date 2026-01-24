@@ -1,35 +1,50 @@
 <!DOCTYPE html>
 <html lang="ru">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
+
 <body>
     <table class="table-card">
-  <thead>
-    <tr>
-      <th>Номер автомобиля</th>
-      <th>Описание</th>
-      <th>Дата создания</th>
-    </tr>
-  </thead>
-  <tbody>
-    @foreach ($reports as $report)
-      <tr>
-        <td>{{ $report['number'] ?? $report->number }}</td>
-        <td>
-          <div>{{ $report['description'] ?? $report->description }}</div>
-        </td>
-        <td class="small-muted">
-          {{ 
-            $report['created_at']
-          }}
-        </td>
-      </tr>
-    @endforeach
-  </tbody>
-</table>
+        <thead>
+            <tr>
+                <th>Номер автомобиля</th>
+                <th>Описание</th>
+                <th>Дата создания</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach ($reports as $report)
+            <tr>
+                <td>{{ $report['number'] ?? $report->number }}</td>
+                <td>
+                    <div>{{ $report['description'] ?? $report->description }}</div>
+                </td>
+                <td class="small-muted">
+                    {{ date('d.m.Y H:i', strtotime($report['created_at'])) }}
+                </td>
+                <td>
+                    <form action="{{route('reports.edit', $report->id)}}" method="get">
+                        @csrf
+                        <input type="submit" value="Изменить">
+                </td>
+                <td>
+                    <form action="{{route('reports.destroy', $report->id)}}" method="post">
+                        @method('delete')
+                        @csrf
+                        <input type="submit" value="Удалить">
+                </td>
+
+                </form>
+            </tr>
+            @endforeach
+        </tbody>
+    </table>
+    <a href="{{route('report.create')}}">Создать заявление</a>
 </body>
+
 </html>
