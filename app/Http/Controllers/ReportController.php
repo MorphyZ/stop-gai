@@ -9,7 +9,7 @@ class ReportController extends Controller
 {
     public function index()
     {
-        $reports = Report::all();
+        $reports = Report::paginate(8);
         return view('report.index', compact('reports'));
     }
     public function destroy(Report $report){

@@ -15,6 +15,7 @@
                 <th>Номер автомобиля</th>
                 <th>Описание</th>
                 <th>Дата создания</th>
+                <th>Cтатус</th>
             </tr>
         </thead>
         <tbody>
@@ -27,10 +28,11 @@
                 <td class="small-muted">
                     {{ date('d.m.Y H:i', strtotime($report['created_at'])) }}
                 </td>
+                <td class="small-muted">
+                    {{ $report->status->name }}
+                </td>
                 <td>
-                    <form action="{{route('reports.edit', $report->id)}}" method="get">
-                        @csrf
-                        <input type="submit" value="Изменить">
+                    <a href="{{route('reports.edit', $report->id)}}">Изменить</a>
                 </td>
                 <td>
                     <form action="{{route('reports.destroy', $report->id)}}" method="post">
@@ -44,6 +46,7 @@
             @endforeach
         </tbody>
     </table>
+    {{$reports->links()}}
     <a href="{{route('report.create')}}">Создать заявление</a>
 </body>
 
