@@ -10,9 +10,22 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Report extends Model
 {
     use SoftDeletes, HasFactory;
-    protected $guarded = [];
 
-    public function status(): BelongsTo{
+    protected $quarded = [];
+    protected $fillable = [
+        'number', 
+        'description',
+        'status_id',
+        'user_id',
+    ];
+
+    public function status(): BelongsTo
+    {
         return $this->belongsTo(Status::class);
+    }
+
+    public function user(): BelongsTo 
+    {
+        return $this->belongsTo(User::class);
     }
 }
